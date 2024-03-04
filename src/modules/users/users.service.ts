@@ -38,8 +38,10 @@ export class UsersService {
     return `This action returns all users`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  async findOne(where) {
+
+    const findUser = await this.prisma.users.findFirst({where})
+    return findUser;
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
