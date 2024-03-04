@@ -1,14 +1,35 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
-
-// Looking for ways to speed up your queries, or scale easily with your serverless or edge functions?
-// Try Prisma Accelerate: https://pris.ly/cli/accelerate-init
-
 generator client {
   provider = "prisma-client-js"
 }
 
 datasource db {
-  provider = "postgresql"
+  provider = "mysql"
   url      = env("DATABASE_URL")
+}
+
+model balance {
+  id_balance Int     @id @default(autoincrement())
+  value      Int?
+  users      users[]
+}
+
+model people {
+  id_people Int     @id @default(autoincrement())
+  name      String  @default("0") @db.VarChar(50)
+  cpf       String  @default("0") @db.VarChar(50)
+  telephone Int     @default(0)
+  email     String  @default("0") @db.VarChar(50)
+  users     users[]
+}
+
+model users {
+  id_user    Int     @id @default(autoincrement())
+  id_people  Int     @default(0)
+  id_balance Int     @default(0)
+  password   String  @db.Text
+  balance    balance @relation(fields: [id_balance], references: [id_balance], onDelete: NoAction, onUpdate: NoAction, map: "FK_users_balance")
+  people     people  @relation(fields: [id_people], references: [id_people], onDelete: NoAction, onUpdate: NoAction, map: "FK_users_people")
+
+  @@index([id_balance], map: "id_balance")
+  @@index([id_people], map: "id_people")
 }
