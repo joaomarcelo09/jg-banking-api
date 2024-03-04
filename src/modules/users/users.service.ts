@@ -20,7 +20,7 @@ export class UsersService {
         const balance = await this.balance.create(tx)
         const people = await this.people.create(data.people, tx)
 
-        const user = await this.prisma.users.create({
+        const user = await tx.users.create({
           data: {
             id_people: people.id_people,
             id_balance: balance.id_balance,

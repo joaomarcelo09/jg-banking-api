@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/commo
 import { UsersService } from './users.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
-import { HashPassword } from 'src/helpers/password/hashPassword';
+import { HashPassword } from 'src/helpers/password/password';
 
 @Controller('users')
 export class UsersController {
@@ -12,7 +12,8 @@ export class UsersController {
   async create(@Body() body: CreateUserDto) {
 
     const data = {
-      password: HashPassword(body.password)
+      password: await HashPassword(body.password),
+      people: body.people
     }
 
     const user = await this.usersService.create(data)
