@@ -1,0 +1,37 @@
+_id: req_40eae76956dd4edd9fef8758b405d349
+type: Request
+parentId: fld_3bac6ae7f0394b808c35b5e507df3643
+modified: 1709598219470
+created: 1709573525837
+url: "{{ _.BASE }}users/"
+name: create
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"password":"teste",
+    	"people": {
+    		"name": "Joao",
+    		"email": "jmjoao71@hotmail.com",
+    		"cpf": "20062838717"
+    	}
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+  - name: User-Agent
+    value: insomnia/2023.5.8
+authentication:
+  type: bearer
+  token: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZF91c2VyIjo3LCJ1c2VybmFtZSI6IkpvYW8iLCJpYXQiOjE3MDk1OTczODEsImV4cCI6MTcwOTU5Nzg2MX0.PDsh5-Nboq6jE4M3QLy7yq8VduqlUyCFMSZKwl88uCI
+metaSortKey: -1709573525837
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
