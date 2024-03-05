@@ -28,7 +28,7 @@ export class UsersService {
           }
         })
 
-        return user
+        return {user, people, balance}
         })
 
     return user;
