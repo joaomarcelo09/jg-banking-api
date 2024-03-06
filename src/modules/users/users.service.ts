@@ -34,12 +34,7 @@ export class UsersService {
     return user;
   }
 
-  findAll() {
-    return `This action returns all users`;
-  }
-
   async findOne(where?, select?) {
-
     const findUser = await this.prisma.users.findFirst({where, select})
     return findUser;
   }
