@@ -19,26 +19,12 @@ export class BalanceService {
 
   async deposit(id, value) {
 
-    const {balance} = await this.prisma.users.findFirst({
-      where: {
-        id_user: id
-      },
-      select: {
-        balance: {
-          select: {
-            id_balance: true,
-            value: true
-          }
-        }
-      }
-    })
-
     const upBalance = await this.prisma.balance.update({
       where: {
-        id_balance: balance.id_balance
+        id_balance: id
       },
       data: {
-        value: balance.value + value
+        value: value
       }
     })
 
