@@ -1,0 +1,31 @@
+_id: req_8b4c0f6347204758a2e5bfb453c69e98
+type: Request
+parentId: fld_e26d89a61313401ea73432acb110954b
+modified: 1709597354004
+created: 1709592654409
+url: "{{ _.BASE }}auth/"
+name: login
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    	"email": "jmjoao73@hotmail.com",
+    	"password": "teste"
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+  - name: User-Agent
+    value: insomnia/2023.5.8
+authentication: {}
+metaSortKey: -1709592654409
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global
