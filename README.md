@@ -1,5 +1,3 @@
-![image](https://github.com/joaomarcelo09/jg-banking-api/assets/129187461/fa439da0-416a-42c7-b677-c8473430d58e)
-
 <p align="center">
   <a target="blank"><img src="https://github.com/joaomarcelo09/jg-banking-api/assets/129187461/fa439da0-416a-42c7-b677-c8473430d58e" width="200" alt="Bank logo" /></a>
 </p>
