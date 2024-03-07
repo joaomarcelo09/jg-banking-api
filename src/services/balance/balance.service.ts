@@ -17,7 +17,7 @@ export class BalanceService {
     return balance;
   }
 
-  async deposit(id, value) {
+  async deposit(id, value, id_user, amount_sent) {
 
     const upBalance = await this.prisma.balance.update({
       where: {
@@ -28,10 +28,17 @@ export class BalanceService {
       }
     })
 
+    await this.prisma.deposit_record.create({
+      data: {
+        id_deposit_user: id_user,
+        deposit_amount: amount_sent
+      }
+    })
+
     return upBalance;
   }
 
-  async withdraw(id, value) {
+  async withdraw(id, value, id_user, amount_sent) {
 
     const upBalance = await this.prisma.balance.update({
       where: {
@@ -42,16 +49,23 @@ export class BalanceService {
       }
     })
 
+    await this.prisma.withdrawal_record.create({
+      data: {
+        id_withdrawal_user: id_user,
+        withdrawal_amount: amount_sent
+      }
+    })
+
     return upBalance;
   }
 
-  async transfer(sender, recipient) {
+  async transfer(sender, recipient, value) {
 
     await this.prisma.$transaction(async (x) => {
 
       await this.prisma.balance.update({
         where: {
-          id_balance: sender.id_sender
+          id_balance: sender.id_balance
         },
         data: {
           value: sender.value
@@ -60,10 +74,18 @@ export class BalanceService {
 
       await this.prisma.balance.update({
         where: {
-          id_balance: recipient.id_recipient
+          id_balance: recipient.id_balance
         },
         data: {
           value: recipient.value
+        }
+      })
+
+      await this.prisma.pix_transaction.create({
+        data: {
+          amount_sent: value,
+          id_pix_recipient: recipient.id_user,
+          id_pix_sender: sender.id_user
         }
       })
 

@@ -28,6 +28,7 @@ model users {
   id_people                                               Int                 @unique(map: "id_people") @default(0)
   id_balance                                              Int                 @default(0)
   password                                                String              @db.Text
+  deposit_record                                          deposit_record[]
   pix_key                                                 pix_key[]
   pix_transaction_pix_transaction_id_pix_senderTousers    pix_transaction[]   @relation("pix_transaction_id_pix_senderTousers")
   pix_transaction_pix_transaction_id_pix_recipientTousers pix_transaction[]   @relation("pix_transaction_id_pix_recipientTousers")
@@ -71,6 +72,16 @@ model withdrawal_record {
   users                users?    @relation(fields: [id_withdrawal_user], references: [id_user], onDelete: NoAction, onUpdate: NoAction, map: "FK_withdrawal_record_users")
 
   @@index([id_withdrawal_user], map: "id_withdrawal_user")
+}
+
+model deposit_record {
+  id_deposit_record Int       @id @default(autoincrement())
+  id_deposit_user   Int?
+  deposit_amount    Int?
+  deposit_date      DateTime? @default(dbgenerated("(now())")) @db.DateTime(0)
+  users             users?    @relation(fields: [id_deposit_user], references: [id_user], onDelete: NoAction, onUpdate: NoAction, map: "deposit_record_ibfk_1")
+
+  @@index([id_deposit_user], map: "id_deposit_user")
 }
 
 enum pix_key_key_type {

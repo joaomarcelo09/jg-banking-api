@@ -34,7 +34,7 @@ export class BankingController {
     const user: any = await this.user.findOne(where, select)
     const value = user.balance.value + body.value
 
-    return await this.balance.deposit(user.balance.id_balance, value);
+    return await this.balance.deposit(user.balance.id_balance, value, user.id_user, body.value);
 
   }
 
@@ -59,7 +59,7 @@ export class BankingController {
 
     if (value < 0) throw new HttpException('Saldo insuficiente', HttpStatus.BAD_REQUEST)
 
-    return await this.balance.withdraw(user.balance.id_balance, value);
+    return await this.balance.withdraw(user.balance.id_balance, value, user.id_user, body.value);
 
   }
 
@@ -168,16 +168,18 @@ export class BankingController {
     if (valueSender < 0) throw new HttpException('Saldo insuficiente', HttpStatus.BAD_REQUEST)
 
     const dataSender = {
-      id_sender: sender.balance.id_balance,
+      id_balance: sender.balance.id_balance,
+      id_sender: sender.id_user,
       value: valueSender
     }
 
     const dataRecipient = {
-      id_recipient: recipient.users.balance.id_balance,
+      id_balance: recipient.users.balance.id_balance,
+      id_recipient: recipient.users.id_user,
       value: valueRecipient
     }
 
-    await this.balance.transfer(dataSender, dataRecipient)
+    await this.balance.transfer(dataSender, dataRecipient, body.value)
 
     return { extract: {
       cpfSender: sender.people.cpf,
