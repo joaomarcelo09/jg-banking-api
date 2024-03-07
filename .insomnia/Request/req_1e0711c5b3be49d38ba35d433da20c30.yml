@@ -1,0 +1,25 @@
+_id: req_1e0711c5b3be49d38ba35d433da20c30
+type: Request
+parentId: fld_3bac6ae7f0394b808c35b5e507df3643
+modified: 1709833931070
+created: 1709833916813
+url: "{{ _.BASE }}users/"
+name: delete
+description: ""
+method: DELETE
+body: {}
+parameters: []
+headers:
+  - name: User-Agent
+    value: insomnia/2023.5.8
+authentication:
+  type: bearer
+  token: "{{ _.token }}"
+metaSortKey: -1708814018526.25
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

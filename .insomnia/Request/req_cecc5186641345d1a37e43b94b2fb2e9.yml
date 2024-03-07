@@ -1,18 +1,17 @@
-_id: req_8b4c0f6347204758a2e5bfb453c69e98
+_id: req_cecc5186641345d1a37e43b94b2fb2e9
 type: Request
-parentId: fld_e26d89a61313401ea73432acb110954b
-modified: 1709839360073
-created: 1709592654409
-url: "{{ _.BASE }}auth/"
-name: login
+parentId: fld_ee428072a0a34e84a10a7d61e80c5622
+modified: 1709837437176
+created: 1709769524069
+url: "{{ _.BASE }}banking/register-pix"
+name: register pix
 description: ""
 method: POST
 body:
   mimeType: application/json
   text: |-
     {
-    	"email": "jmjoao770@hotmail.com",
-    	"password": "teste"
+    	"type": "cpf"
     }
 parameters: []
 headers:
@@ -20,8 +19,10 @@ headers:
     value: application/json
   - name: User-Agent
     value: insomnia/2023.5.8
-authentication: {}
-metaSortKey: -1709592654409
+authentication:
+  type: bearer
+  token: "{{ _.token }}"
+metaSortKey: -1709769524069
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true
