@@ -23,6 +23,7 @@ export class BankingController {
     }
 
     const select = {
+      id_user:true,
       balance: {
         select: {
           id_balance: true,
@@ -46,6 +47,7 @@ export class BankingController {
     }
 
     const select = {
+      id_user:true,
       balance: {
         select: {
           id_balance: true,
