@@ -1,12 +1,12 @@
-_id: req_40eae76956dd4edd9fef8758b405d349
+_id: req_de076a8a3b4342f3935d72bdbcc8c89f
 type: Request
 parentId: fld_3bac6ae7f0394b808c35b5e507df3643
-modified: 1709840186742
-created: 1709573525837
+modified: 1709840208948
+created: 1709829165241
 url: "{{ _.BASE }}users/"
-name: create
+name: update
 description: ""
-method: POST
+method: PATCH
 body:
   mimeType: application/json
   text: |-
@@ -16,8 +16,7 @@ body:
     		"name": "Lorenzo Ricardo de Paula",
     		"email": "lorenzo_ricardo_depaula@unimedara.com.br",
     		"telephone": "69982718078",
-    		"date_birth": "04/03/1955",
-    		"cpf": "72333379774"
+    		"date_birth": "04/03/1955"
     	}
     }
 parameters: []
@@ -26,8 +25,10 @@ headers:
     value: application/json
   - name: User-Agent
     value: insomnia/2023.5.8
-authentication: {}
-metaSortKey: -1709573525837
+authentication:
+  type: bearer
+  token: "{{ _.token }}"
+metaSortKey: -1708054511215.5
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true

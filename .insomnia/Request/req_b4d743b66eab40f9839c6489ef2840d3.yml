@@ -1,18 +1,18 @@
-_id: req_8b4c0f6347204758a2e5bfb453c69e98
+_id: req_b4d743b66eab40f9839c6489ef2840d3
 type: Request
-parentId: fld_e26d89a61313401ea73432acb110954b
-modified: 1709839360073
-created: 1709592654409
-url: "{{ _.BASE }}auth/"
-name: login
+parentId: fld_ee428072a0a34e84a10a7d61e80c5622
+modified: 1709839375309
+created: 1709770718909
+url: "{{ _.BASE }}banking/make-pix"
+name: make pix
 description: ""
-method: POST
+method: PATCH
 body:
   mimeType: application/json
   text: |-
     {
-    	"email": "jmjoao770@hotmail.com",
-    	"password": "teste"
+    	"key_pix": "20062838717",
+    	"value": 200
     }
 parameters: []
 headers:
@@ -20,8 +20,10 @@ headers:
     value: application/json
   - name: User-Agent
     value: insomnia/2023.5.8
-authentication: {}
-metaSortKey: -1709592654409
+authentication:
+  type: bearer
+  token: "{{ _.token }}"
+metaSortKey: -1709727966065
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true

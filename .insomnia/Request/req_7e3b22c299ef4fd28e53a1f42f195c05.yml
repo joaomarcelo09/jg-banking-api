@@ -1,18 +1,17 @@
-_id: req_8b4c0f6347204758a2e5bfb453c69e98
+_id: req_7e3b22c299ef4fd28e53a1f42f195c05
 type: Request
-parentId: fld_e26d89a61313401ea73432acb110954b
-modified: 1709839360073
-created: 1709592654409
-url: "{{ _.BASE }}auth/"
-name: login
+parentId: fld_b919ad2b9fbf48e5b0cbfa58c3f533c3
+modified: 1709839366013
+created: 1709686408061
+url: "{{ _.BASE }}banking/deposit"
+name: deposit
 description: ""
-method: POST
+method: PATCH
 body:
   mimeType: application/json
   text: |-
     {
-    	"email": "jmjoao770@hotmail.com",
-    	"password": "teste"
+    	"value": 500
     }
 parameters: []
 headers:
@@ -20,8 +19,10 @@ headers:
     value: application/json
   - name: User-Agent
     value: insomnia/2023.5.8
-authentication: {}
-metaSortKey: -1709592654409
+authentication:
+  type: bearer
+  token: "{{ _.token }}"
+metaSortKey: -1709686408061
 isPrivate: false
 settingStoreCookies: true
 settingSendCookies: true
