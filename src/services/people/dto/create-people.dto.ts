@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { IsNumber, IsString } from "class-validator"
+import { IsMobilePhone, IsNumber, IsString } from "class-validator"
 
 export class PeopleCreateDto {
 
@@ -12,7 +12,7 @@ export class PeopleCreateDto {
     cpf: string
 
     @ApiProperty()
-    @IsNumber()
+    @IsMobilePhone()
     telephone: number
 
     @ApiProperty()
