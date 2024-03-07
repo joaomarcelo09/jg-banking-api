@@ -5,7 +5,9 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { HashPassword } from 'src/helpers/password/password';
 import { SkipAuth } from '../auth/auth.decorator';
 import { validateCPF } from 'src/helpers/valid/valid-cpf';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('User')
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

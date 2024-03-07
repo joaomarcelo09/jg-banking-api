@@ -5,7 +5,9 @@ import { comparePassword } from 'src/helpers/password/password';
 import { JwtService } from '@nestjs/jwt';
 import { SkipAuth } from './auth.decorator';
 import { LoginDto } from './dto/login-dto';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService, private readonly user: UsersService, private readonly jwt: JwtService) {

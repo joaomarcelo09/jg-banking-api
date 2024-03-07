@@ -6,9 +6,10 @@ import { WithdrawBankingDto } from './dto/withdraw-dto';
 import { UsersService } from '../users/users.service';
 import { RegisterPixDto } from './dto/register-pix-dto';
 import { MakePixDto } from './dto/make-pix-dto';
-import { truncate } from 'fs';
 import { diffTypePix } from 'src/helpers/pix/registerPix';
+import { ApiTags } from '@nestjs/swagger';
 
+@ApiTags('Banking')
 @Controller('banking')
 export class BankingController {
   constructor(private readonly balance: BalanceService, private readonly banking: BankingService, private readonly user: UsersService) { }
