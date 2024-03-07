@@ -12,7 +12,7 @@ export class PeopleCreateDto {
     cpf: string
 
     @ApiProperty()
-    @IsMobilePhone()
+    @IsMobilePhone('pt-BR')
     telephone: number
 
     @ApiProperty()
