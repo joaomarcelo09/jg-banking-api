@@ -84,10 +84,17 @@ export class UsersController {
         email: body.people.email
       }
     }
+    const whereTelephone = {
+      people: {
+        telephone: body.people.telephone
+      }
+    }
 
+    const existTelephone = await this.usersService.findOne(whereTelephone)
     const existEmail = await this.usersService.findOne(whereEmail)
+    
 
-    if (existEmail) throw new HttpException('Email existente', HttpStatus.BAD_REQUEST)
+    if (existEmail || existTelephone) throw new HttpException(`${existEmail ? 'Email existente' : 'Telefone existente'}`, HttpStatus.BAD_REQUEST)
 
 
     return this.usersService.update(id, data);
