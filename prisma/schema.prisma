@@ -17,7 +17,7 @@ model people {
   id_people  Int     @id @default(autoincrement())
   name       String  @default("0") @db.VarChar(50)
   cpf        String  @default("0") @db.VarChar(50)
-  telephone  Int     @default(0)
+  telephone  String  @default("0") @db.VarChar(50)
   email      String  @default("0") @db.VarChar(50)
   date_birth String? @db.VarChar(50)
   users      users?

@@ -39,11 +39,70 @@ export class UsersService {
     return findUser;
   }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
+  async update(id: number, data: any) {
+
+    const upUser = await this.prisma.users.update({
+      where: {
+        id_user: id
+      },
+      data: {
+        password: data.password,
+        people: {
+          update: {
+            name: data.name,
+            email: data.email,
+            cpf: data.cpf,
+            telephone: data.telephone,
+            date_birth: data.date_birth
+          }
+        }
+      }
+    })
+
+    return upUser;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} user`;
+  async remove(data: any, id: number) {
+
+    const request = await this.prisma.$transaction(async (x) => {
+
+      data.before.map(async (x) => {
+         await this.prisma.pix_key.delete({
+          where: {
+            id_pix_key: x
+          }
+         })
+      })
+  
+      await this.prisma.users.delete({
+        where: {
+          id_user: id
+        },
+        select: {
+          balance: true,
+          pix_key: true,
+          people: true
+        }
+      })
+  
+      await this.prisma.balance.delete({
+        where: {
+          id_balance: data.after.balance.id_balance
+        }
+      })
+  
+      await this.prisma.people.delete({
+        where: {
+          id_people: data.after.people.id_people
+        }
+      })
+
+      return
+
+    }, {
+      timeout: 20000
+    }) 
+
+    return request;
   }
 }
