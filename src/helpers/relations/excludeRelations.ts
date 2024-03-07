@@ -9,7 +9,6 @@ export async function excludeRelations(
     const prisma = new PrismaClient();
   
     try {
-      // Encontrar o usuário e incluir as relações antes da exclusão do usuário
       const includeBefore: Record<string, { select: Record<string, boolean> }> = {};
       relationsBefore.forEach((relation) => {
         const idColumnName = `id_${relation}`;
