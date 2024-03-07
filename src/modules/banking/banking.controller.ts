@@ -8,6 +8,7 @@ import { RegisterPixDto } from './dto/register-pix-dto';
 import { MakePixDto } from './dto/make-pix-dto';
 import { diffTypePix } from 'src/helpers/pix/registerPix';
 import { ApiTags } from '@nestjs/swagger';
+import { ExcludePixDto } from './dto/exclude-pix-dto';
 
 @ApiTags('Banking')
 @Controller('banking')
@@ -98,6 +99,20 @@ export class BankingController {
 
   }
 
+  @Delete('/exclude-pix')
+  async excludePix(@Body() body: ExcludePixDto, @Req() req) {
+
+    const wherePix = {
+      key_type: body.type,
+      id_user: req.user.id_user
+    }
+    const existPix = await this.banking.findPix(wherePix)
+    if (!existPix) throw new HttpException('Pix não encontrado', HttpStatus.NOT_FOUND)
+
+    return await this.banking.excludePix(existPix.id_pix_key)
+
+  }
+
   @Patch('/make-pix')
   async makePix(@Body() body: MakePixDto, @Req() req) {
 
@@ -109,6 +124,11 @@ export class BankingController {
       users: {
         select: {
           id_user: true,
+          people: {
+            select: {
+              cpf: true
+            }
+          },
           balance: {
             select: {
               value: true,
@@ -124,6 +144,11 @@ export class BankingController {
 
     const selectUser = {
       id_user: true,
+      people: {
+        select: {
+          cpf: true
+        }
+      },
       balance: {
         select: {
           value: true,
@@ -152,9 +177,13 @@ export class BankingController {
       value: valueRecipient
     }
 
-    const extract = await this.balance.transfer(dataSender, dataRecipient)
+    await this.balance.transfer(dataSender, dataRecipient)
 
-    return { extract };
+    return { extract: {
+      cpfSender: sender.people.cpf,
+      value: body.value,
+      cpfRecipient: recipient.users.people.cpf
+    } };
 
   }
 

@@ -6,13 +6,12 @@ import { HashPassword } from 'src/helpers/password/password';
 import { SkipAuth } from '../auth/auth.decorator';
 import { validateCPF } from 'src/helpers/valid/valid-cpf';
 import { ApiTags } from '@nestjs/swagger';
-import { validate } from 'class-validator';
 import { excludeRelations } from 'src/helpers/relations/excludeRelations';
 
 @ApiTags('User')
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+  constructor(private readonly usersService: UsersService) { }
 
   @SkipAuth()
   @Post()
@@ -35,12 +34,21 @@ export class UsersController {
       }
     }
 
+    const whereTelephone = {
+      people: {
+        telephone: body.people.telephone
+      }
+    }
+
     const existEmail = await this.usersService.findOne(whereEmail)
     const existCpf = await this.usersService.findOne(whereCpf)
+    const existTelephone = await this.usersService.findOne(whereTelephone)
     const validCpf = await validateCPF(body.people.cpf)
 
-    if(existEmail || existCpf)  throw new HttpException(`${existEmail ? 'Email existente' : 'Cpf existente'}`, HttpStatus.BAD_REQUEST)
-    if(!validCpf) throw new HttpException('Cpf inválido', HttpStatus.BAD_REQUEST)
+    if (existEmail || existCpf || existTelephone)
+      throw new HttpException(`${existEmail ? 'Email existente' : existCpf ? 'Cpf existente' : 'Telefone existente'}`,
+        HttpStatus.BAD_REQUEST)
+    if (!validCpf) throw new HttpException('Cpf inválido', HttpStatus.BAD_REQUEST)
 
     const user = await this.usersService.create(data)
     return user;
@@ -79,7 +87,7 @@ export class UsersController {
 
     const existEmail = await this.usersService.findOne(whereEmail)
 
-    if(existEmail)  throw new HttpException('Email existente', HttpStatus.BAD_REQUEST)
+    if (existEmail) throw new HttpException('Email existente', HttpStatus.BAD_REQUEST)
 
 
     return this.usersService.update(id, data);

@@ -22,6 +22,18 @@ export class BankingService {
 
     }
 
+    async excludePix(id: number) {
+
+        const deletePix = await this.prisma.pix_key.delete({
+            where: {
+                id_pix_key: id
+            }
+        })
+
+        return deletePix
+
+    }
+
     async findPix(where,select?) {
 
         const pix = await this.prisma.pix_key.findFirst({

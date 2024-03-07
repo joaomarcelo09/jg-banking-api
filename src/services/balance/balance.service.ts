@@ -47,22 +47,28 @@ export class BalanceService {
 
   async transfer(sender, recipient) {
 
-    await this.prisma.balance.update({
-      where: {
-       id_balance: sender.id_sender
-      },
-      data: {
-        value: sender.value
-      }
-    })
+    await this.prisma.$transaction(async (x) => {
 
-    await this.prisma.balance.update({
-      where: {
-       id_balance: recipient.id_recipient
-      },
-      data: {
-        value: recipient.value
-      }
+      await this.prisma.balance.update({
+        where: {
+          id_balance: sender.id_sender
+        },
+        data: {
+          value: sender.value
+        }
+      })
+
+      await this.prisma.balance.update({
+        where: {
+          id_balance: recipient.id_recipient
+        },
+        data: {
+          value: recipient.value
+        }
+      })
+
+    }, {
+      timeout: 20000
     })
 
     return true
