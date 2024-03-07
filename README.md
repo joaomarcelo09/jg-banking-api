@@ -1,5 +1,4 @@
-![image](https://github.com/joaomarcelo09/jg-banking-api/assets/129187461/d8d8ae89-d99d-4aec-aaac-e8ee8400bfcf)
-
+![image](https://github.com/joaomarcelo09/jg-banking-api/assets/129187461/fa439da0-416a-42c7-b677-c8473430d58e)
 
 ## Description
 
