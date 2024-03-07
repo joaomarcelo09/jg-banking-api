@@ -44,4 +44,28 @@ export class BalanceService {
 
     return upBalance;
   }
+
+  async transfer(sender, recipient) {
+
+    await this.prisma.balance.update({
+      where: {
+       id_balance: sender.id_sender
+      },
+      data: {
+        value: sender.value
+      }
+    })
+
+    await this.prisma.balance.update({
+      where: {
+       id_balance: recipient.id_recipient
+      },
+      data: {
+        value: recipient.value
+      }
+    })
+
+    return true
+
+  }
 }
