@@ -7,9 +7,10 @@ import { UsersService } from '../users/users.service';
 import { RegisterPixDto } from './dto/register-pix-dto';
 import { MakePixDto } from './dto/make-pix-dto';
 import { diffTypePix } from 'src/helpers/pix/registerPix';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { ExcludePixDto } from './dto/exclude-pix-dto';
 
+@ApiBearerAuth()
 @ApiTags('Banking')
 @Controller('banking')
 export class BankingController {
