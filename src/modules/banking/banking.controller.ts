@@ -123,7 +123,6 @@ export class BankingController {
       key: body.key_pix
     }
 
-
     const selectPix = {
       users: {
         select: {
