@@ -3,8 +3,8 @@ generator client {
 }
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:dev.db?mode=memory&cache=shared"
 }
 
 model balance {
@@ -15,40 +15,40 @@ model balance {
 
 model people {
   id_people  Int     @id @default(autoincrement())
-  name       String  @default("0") @db.VarChar(50)
-  cpf        String  @default("0") @db.VarChar(50)
-  telephone  String  @default("0") @db.VarChar(50)
-  email      String  @default("0") @db.VarChar(50)
-  date_birth String? @db.VarChar(50)
+  name       String  @default("0")
+  cpf        String  @default("0")
+  telephone  String  @default("0")
+  email      String  @default("0")
+  date_birth String?
   users      users?
 }
 
 model users {
   id_user                                                 Int                 @id @default(autoincrement())
-  id_people                                               Int                 @unique(map: "id_people") @default(0)
+  id_people                                               Int                 @unique @default(0)
   id_balance                                              Int                 @default(0)
-  password                                                String              @db.Text
+  password                                                String
   deposit_record                                          deposit_record[]
   pix_key                                                 pix_key[]
   pix_transaction_pix_transaction_id_pix_senderTousers    pix_transaction[]   @relation("pix_transaction_id_pix_senderTousers")
   pix_transaction_pix_transaction_id_pix_recipientTousers pix_transaction[]   @relation("pix_transaction_id_pix_recipientTousers")
-  balance                                                 balance             @relation(fields: [id_balance], references: [id_balance], onDelete: NoAction, onUpdate: NoAction, map: "FK_users_balance")
-  people                                                  people              @relation(fields: [id_people], references: [id_people], onDelete: NoAction, onUpdate: NoAction, map: "FK_users_people")
+  balance                                                 balance             @relation(fields: [id_balance], references: [id_balance])
+  people                                                  people              @relation(fields: [id_people], references: [id_people])
   withdrawal_record                                       withdrawal_record[]
 
-  @@unique([id_balance, id_people], map: "id_balance")
-  @@index([id_balance], map: "fk")
-  @@index([id_people], map: "fk2")
+  @@unique([id_balance, id_people])
+  @@index([id_balance])
+  @@index([id_people])
 }
 
 model pix_key {
-  id_pix_key Int               @id @default(autoincrement())
+  id_pix_key Int     @id @default(autoincrement())
   id_user    Int?
-  key        String?           @db.VarChar(50)
-  key_type   pix_key_key_type?
-  users      users?            @relation(fields: [id_user], references: [id_user], onDelete: NoAction, onUpdate: NoAction, map: "FK_pix_key_users")
+  key        String?
+  key_type   String?
+  users      users?  @relation(fields: [id_user], references: [id_user])
 
-  @@index([id_user], map: "id_user")
+  @@index([id_user])
 }
 
 model pix_transaction {
@@ -56,36 +56,30 @@ model pix_transaction {
   id_pix_sender                                 Int?
   id_pix_recipient                              Int?
   amount_sent                                   Int?
-  transiction_date                              DateTime? @default(dbgenerated("(now())")) @db.DateTime(0)
-  users_pix_transaction_id_pix_senderTousers    users?    @relation("pix_transaction_id_pix_senderTousers", fields: [id_pix_sender], references: [id_user], onDelete: NoAction, onUpdate: NoAction, map: "FK_pix_transaction_users")
-  users_pix_transaction_id_pix_recipientTousers users?    @relation("pix_transaction_id_pix_recipientTousers", fields: [id_pix_recipient], references: [id_user], onDelete: NoAction, onUpdate: NoAction, map: "FK_pix_transaction_users_2")
+  transiction_date                              DateTime? @default(now())
+  users_pix_transaction_id_pix_senderTousers    users?    @relation("pix_transaction_id_pix_senderTousers", fields: [id_pix_sender], references: [id_user])
+  users_pix_transaction_id_pix_recipientTousers users?    @relation("pix_transaction_id_pix_recipientTousers", fields: [id_pix_recipient], references: [id_user])
 
-  @@index([id_pix_recipient], map: "id_pix_recipient")
-  @@index([id_pix_sender], map: "id_pix_sender")
+  @@index([id_pix_recipient])
+  @@index([id_pix_sender])
 }
 
 model withdrawal_record {
   id_withdrawal_record Int       @id @default(autoincrement())
   id_withdrawal_user   Int?
   withdrawal_amount    Int?
-  withdrawal_date      DateTime? @default(dbgenerated("(now())")) @db.DateTime(0)
-  users                users?    @relation(fields: [id_withdrawal_user], references: [id_user], onDelete: NoAction, onUpdate: NoAction, map: "FK_withdrawal_record_users")
+  withdrawal_date      DateTime? @default(now())
+  users                users?    @relation(fields: [id_withdrawal_user], references: [id_user])
 
-  @@index([id_withdrawal_user], map: "id_withdrawal_user")
+  @@index([id_withdrawal_user])
 }
 
 model deposit_record {
   id_deposit_record Int       @id @default(autoincrement())
   id_deposit_user   Int?
   deposit_amount    Int?
-  deposit_date      DateTime? @default(dbgenerated("(now())")) @db.DateTime(0)
-  users             users?    @relation(fields: [id_deposit_user], references: [id_user], onDelete: NoAction, onUpdate: NoAction, map: "deposit_record_ibfk_1")
+  deposit_date      DateTime? @default(now())
+  users             users?    @relation(fields: [id_deposit_user], references: [id_user])
 
-  @@index([id_deposit_user], map: "id_deposit_user")
-}
-
-enum pix_key_key_type {
-  email
-  telephone
-  cpf
+  @@index([id_deposit_user])
 }
