@@ -24,7 +24,7 @@ export class BankingController {
     }
 
     const select = {
-      id_user:true,
+      id_user: true,
       balance: {
         select: {
           id_balance: true,
@@ -48,7 +48,7 @@ export class BankingController {
     }
 
     const select = {
-      id_user:true,
+      id_user: true,
       balance: {
         select: {
           id_balance: true,
@@ -123,6 +123,7 @@ export class BankingController {
       key: body.key_pix
     }
 
+
     const selectPix = {
       users: {
         select: {
@@ -184,11 +185,13 @@ export class BankingController {
 
     await this.balance.transfer(dataSender, dataRecipient, body.value)
 
-    return { extract: {
-      cpfSender: sender.people.cpf,
-      value: body.value,
-      cpfRecipient: recipient.users.people.cpf
-    } };
+    return {
+      extract: {
+        cpfSender: sender.people.cpf,
+        value: body.value,
+        cpfRecipient: recipient.users.people.cpf
+      }
+    };
 
   }
 
