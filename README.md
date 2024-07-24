@@ -9,18 +9,20 @@ Esta API simula as funcionalidades básicas de um banco, permitindo transferênc
 ## Funcionalidades Principais
 
 1. **Transferência PIX**
+
    - Transfira dinheiro de forma rápida e segura usando o sistema PIX.
 
 2. **Saques e Depósitos**
+
    - Realize saques e depósitos na conta bancária associada ao usuário.
 
 3. **Criação de Usuários**
+
    - Cadastre novos usuários para utilizar os serviços bancários.
 
 4. **Consulta de Saldo**
    - Verifique o saldo disponível na conta associada ao usuário.
-  
-  
+
 ## Installation
 
 ```bash
@@ -40,6 +42,13 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
+## Documentation
+
+```bash
+# URL Documentation
+$ localhost:3000/documentation
+```
+
 ## Test
 
 ```bash
@@ -52,4 +61,3 @@ $ npm run test:e2e
 # test coverage
 $ npm run test:cov
 ```
-
